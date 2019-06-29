@@ -13,6 +13,12 @@ def index():
 def user(name):
     return '<h1>Hello, {}!</h1>'.format(name)
 
+@app.route('/health')
+def health():
+    response = jsonify({'instance_id':instance_id, 'health': 'OK'})
+    response.status_code = 200
+    return response
+
 @app.route('/square/<int:number>')
 def square(number):
     response = jsonify({'instance_id':instance_id, 'result': number*number})

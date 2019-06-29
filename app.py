@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, jsonify
+import hashlib
+import uuid
 
 app = Flask(__name__)
 
@@ -10,7 +12,29 @@ def index():
 def user(name):
     return '<h1>Hello, {}!</h1>'.format(name)
 
-@app.route('/square')
-def square():
-    number = request.args.get('number', type = int)
-    return "<hmtl><head><link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'></head><h1>Su respuesta es:</h1><h3>{}</h3><p>Creado con Flask.</p></html>".format(number*number)
+@app.route('/square/<int:number>')
+def square(number):
+    response = jsonify({'result': number*number})
+    response.status_code = 200
+    return response
+
+@app.route('/uuid')
+def generate_uuid():
+    result = str(uuid.uuid4())
+    response = jsonify({'result': result})
+    response.status_code = 200
+    return response
+
+@app.route('/sha1/<string:text>')
+def sha1(text):
+    result = hashlib.sha1(text.encode())
+    response = jsonify({'result': result.hexdigest()})
+    response.status_code = 200
+    return response
+
+@app.route('/sha256/<string:text>')
+def sha256(text):
+    result = hashlib.sha256(text.encode())
+    response = jsonify({'result': result.hexdigest()})
+    response.status_code = 200
+    return response

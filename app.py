@@ -9,10 +9,6 @@ instance_id = str(uuid.uuid4())
 def index():
     return render_template('index.html')
 
-@app.route('/user/<name>')
-def user(name):
-    return '<h1>Hello, {}!</h1>'.format(name)
-
 @app.route('/health')
 def health():
     response = jsonify({'instance_id':instance_id, 'health': 'OK'})

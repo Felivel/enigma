@@ -16,5 +16,4 @@ COPY app.py boot.sh ./
 # run-time configuration
 EXPOSE 5000
 
-RUN chmod +x ./boot.sh
 ENTRYPOINT ["./boot.sh"]
